@@ -4,43 +4,125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif, sans-serif;
+            background-color: rgb(243, 97, 121);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        input[type="text"] {
+            padding: 15px;
+            width: 80%;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+        input[type="text"]:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+        button {
+            padding: 15px 30px;
+            background: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        button:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+        #gambar {
+            margin-top: 20px;
+        }
+        #gambar img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: zoomIn 0.5s ease;
+        }
+        @keyframes zoomIn {
+            from { transform: scale(0.9); }
+            to { transform: scale(1); }
+        }
+    </style>
 </head>
 <body>
-    <h1>DAFTAR TUGAS</h1>
-    <button onclick="tambahTugas()">Tambah Tugas</button>
-    <button onclick="lihatDaftarTugas()">Lihat Daftar Tugas</button>
-    <h2>Daftar Tugas</h2>
+    <div class="container">
+        <h1>KARTU TANDA ANGGOTA 013</h1>
+        <input id="inputanTeks" placeholder="Masukkan NRA Anda">
+        <button onclick="tampilkan()">Tampilkan Foto</button>
+        <div id="gambar"></div>
+    </div>
 
-    <div id="daftarTugas"></div>
+    <script>
+        function tampilkan(){
+            const imageSelektor = document.getElementById("inputanTeks");
+            const selectedValue = imageSelektor.value;
+            let urlGambar;
+        
+            switch (selectedValue){
+                case '13.24.017':
+                    urlGambar = "5.png";
+                    break;
+                case '13.24.003' :
+                    urlGambar = "1.png";
+                    break;
+                case '13.24.009' :
+                    urlGambar = "4.png";
+                    break;
+                case '13.24.016' :
+                    urlGambar = "3.png";
+                    break;
+                case '13.24.008' :
+                    urlGambar = "6.png";
+                    break;
+                case '13.24.002' :
+                    urlGambar = "2.png";
+                    break;
+                default: 
+                    urlGambar = "https://thumbs.dreamstime.com/b/error-rubber-stamp-word-error-inside-illustration-109026446.jpg";
+                    break;
+            }
+
+            const gambarDiv = document.getElementById("gambar");
+            gambarDiv.innerHTML = `<img src="${urlGambar}" alt="foto">`;
+        }
+    </script>
 </body>
-<script>
-    let daftarTugas = [];
-
-    function tambahTugas(){
-        let tugas = prompt("Masukkan Tugas Baru Anda :");
-        if (tugas) {
-            daftarTugas.push(tugas);
-            alert("Selamat tugas kamu berhasil ditambahkan!");
-        } else {
-            alert("Maaf, Tugas tidak boleh kosong!");
-        }
-    }
-
-    function lihatDaftarTugas() {
-        let daftarTugasDiv = document.getElementById('daftarTugas');
-        daftarTugasDiv.innerHTML = ""; 
-
-        if (daftarTugas.length === 0) {
-            daftarTugasDiv.innerHTML = "<p>Maaf, belum ada tugas yang ditambahkan.</p>";
-        } else {
-            let ol = document.createElement('ol');
-            daftarTugas.forEach(function(tugas) {
-                let li = document.createElement('li');
-                li.textContent = tugas;
-                ol.appendChild(li);
-            });
-            daftarTugasDiv.appendChild(ol);
-        }
-    }
-</script>
 </html>
