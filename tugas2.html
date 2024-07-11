@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Library</title>
+</head>
+<body>
+    <h1>Book Library</h1>
+    <input type="text" id="bookTitle" placeholder="Book Title" required>
+    <input type="text" id="author" placeholder="Author" required>
+    <input type="text" id="year" placeholder="Year" required>
+    <input type="text" id="month" placeholder="Month (for magazines)">
+    <button onclick="tambahBuku()">Add Book</button>
+    
+    <h2>Library Book</h2>
+
+    <div id="daftarBuku"></div>
+</body>
+<script>
+    const daftarBuku = [];
+
+    const tambahBuku = () => {
+        const titleInput = document.getElementById('bookTitle');
+        const authorInput = document.getElementById('author');
+        const yearInput = document.getElementById('year');
+        const monthInput = document.getElementById('month');
+
+        const title = titleInput.value.trim();
+        const author = authorInput.value.trim();
+        const year = yearInput.value.trim();
+        const month = monthInput.value.trim();
+
+        titleInput.setCustomValidity('');
+        authorInput.setCustomValidity('');
+        yearInput.setCustomValidity('');
+
+        if (!title) {
+            titleInput.setCustomValidity("Please fill out this field.");
+            titleInput.reportValidity();
+            return;
+        }
+
+        if (!author) {
+            authorInput.setCustomValidity("Please fill out this field.");
+            authorInput.reportValidity();
+            return;
+        }
+
+        if (!year) {
+            yearInput.setCustomValidity("Please fill out this field.");
+            yearInput.reportValidity();
+            return;
+        }
+
+        daftarBuku.push({
+            title, author, year, month, read: false
+        });
+
+        displayBooks();
+
+        titleInput.value = "";
+        authorInput.value = "";
+        yearInput.value = "";
+        monthInput.value = "";
+    }
+
+    const displayBooks = () => {
+        const daftarBukuDiv = document.getElementById('daftarBuku');
+        daftarBukuDiv.innerHTML = ""; 
+
+        if (!daftarBuku.length) {
+            daftarBukuDiv.innerHTML = "<p>No books have been added.</p>";
+            return;
+        }
+
+        const ul = document.createElement('ul');
+        daftarBuku.forEach((book, index) => {
+            const li = document.createElement('li');
+            li.innerHTML = `${book.title} by ${book.author} published in ${book.year} ${book.month ? 'in ' + book.month : ''}: ${book.read}`;
+            const button = document.createElement('button');
+            button.textContent = "Toggle Read Status";
+            button.onclick = () => toggleReadStatus(index);
+            li.appendChild(button);
+            ul.appendChild(li);
+        });
+        daftarBukuDiv.appendChild(ul);
+    }
+
+    const toggleReadStatus = (index) => {
+        daftarBuku[index].read = !daftarBuku[index].read;
+        displayBooks();
+    }
+</script>
+</html>
